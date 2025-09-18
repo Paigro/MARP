@@ -35,13 +35,6 @@ int ALV(BinTree<T> arbol, std::pair<T, T>& minMax)
 	{
 		return 0;
 	}
-	/*// Caso hoja; devuelve 1 nivel.
-	if (arbol.left().empty() && arbol.right().empty())
-	{
-		minMax.first = arbol.root();
-		minMax.second = arbol.root();
-		return 1;
-	}*/
 
 	// CASOS IZQUIERDO Y DERECHO:
 	std::pair<T, T> minMaxIzq; // Guarda el min y max valor del subarbol izquierdo.
@@ -55,45 +48,51 @@ int ALV(BinTree<T> arbol, std::pair<T, T>& minMax)
 	// Nos guardamos los valores de este nodo.
 	minMax.first = arbol.root();
 	minMax.second = arbol.root();
+	T root = arbol.root();
+	int hola = 0;
 	// Comprobaciones:
 	if (!arbol.left().empty())
 	{
-		if (minMax.first > minMaxIzq.first) // Si el minimo de la izquierda es menor que el propio nos lo guardamos,
+		if (minMax.first > minMaxIzq.first && minMax.second > minMaxIzq.second && minMax.first > minMaxIzq.second) // Si el minimo de la izquierda es menor que el propio y el maximo global es mayor al de la izquierda nos lo guardamos,
 		{
+			//std::cout << "Nuevo min: " << minMaxIzq.first << std::endl;
 			minMax.first = minMaxIzq.first;
 		}
 		else // sino no es ALV.
 		{
+			//std::cout << "No pq min<minIzq || max>maxIzq: " << minMax.first << "<" << minMaxIzq.first << " || " << minMax.second << ">" << minMaxIzq.second << std::endl;
 			return -1;
 		}
 	}
 	if (!arbol.right().empty())
 	{
-		if (minMax.second < minMaxDer.second) // Si el maximo de la derecha es mayor al propio nos lo guardamos,
+		if (minMax.second < minMaxDer.second && minMax.first < minMaxDer.first && minMax.second < minMaxDer.first) // Si el maximo de la derecha es mayor al propio y el minimo global es mayor al minimo dercho nos lo guardamos,
 		{
+			//std::cout << "Nuevo max: " << minMaxDer.second << std::endl;
 			minMax.second = minMaxDer.second;
 		}
 		else // sino no es ALV.
 		{
+			//std::cout << "No pq max>maxDer || min>minDer: " << minMax.second << ">" << minMaxDer.second << " || " << minMax.first << ">" << minMaxDer.first << std::endl;
 			return -1;
 		}
 	}
+	root = root;
+	int adios = 0;
 	// Nos quedamos con el mayor nivel entre los dos subhijos.
-	int mayorNivel = izq >= der ? izq : der;
-
 	if (abs(izq - der) > 1) // Si la diferencia de los niveles de los hijos es mayor a 1 entonces no se cumple que sea ALV.
 	{
+		//std::cout << "Los niveles como que no estan nivelados: " << "der: " << der << " izq: " << izq << " root: " << arbol.root() << std::endl;
 		return -1;
 	}
-	else // sino sumamos un nivel y pasamos al siguiente.
-	{
-		mayorNivel++;
-	}
+	int mayorNivel = izq >= der ? izq : der;
+	mayorNivel++;
 
 	// Comprobamos que los elementos estan bien ordenados. Sino, no es ALV.
 	if (!arbol.left().empty() && arbol.root() < minMax.first ||
 		!arbol.right().empty() && arbol.root() > minMax.second)
 	{
+		//std::cout << "Ni de conya es AVL" << std::endl;
 		return -1;
 	}
 
