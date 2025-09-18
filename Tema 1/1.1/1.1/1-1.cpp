@@ -48,8 +48,8 @@ int ALV(BinTree<T> arbol, std::pair<T, T>& minMax)
 	// Nos guardamos los valores de este nodo.
 	minMax.first = arbol.root();
 	minMax.second = arbol.root();
-	T root = arbol.root();
-	int hola = 0;
+	//T root = arbol.root();
+	//int hola = 0;
 	// Comprobaciones:
 	if (!arbol.left().empty())
 	{
@@ -77,8 +77,8 @@ int ALV(BinTree<T> arbol, std::pair<T, T>& minMax)
 			return -1;
 		}
 	}
-	root = root;
-	int adios = 0;
+	//root = root;
+	//int adios = 0;
 	// Nos quedamos con el mayor nivel entre los dos subhijos.
 	if (abs(izq - der) > 1) // Si la diferencia de los niveles de los hijos es mayor a 1 entonces no se cumple que sea ALV.
 	{
